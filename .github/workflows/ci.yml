@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+  workflow_dispatch:
+
+env:
+  FOUNDRY_PROFILE: ci
+
+jobs:
+  check:
+    strategy:
+      fail-fast: true
+
+    name: Foundry project
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./smartcontracts
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: nightly
+
+      - name: Show Forge version
+        run: |
+          forge --version
+
+      - name: Run Forge fmt
+        run: |
+          forge fmt --check
+        id: fmt
+
+      - name: Run Forge build
+        run: |
+          forge build --sizes
+        id: build
+
+      - name: Run Forge tests
+        run: |
+          forge test -vvv
+        id: test
+  deploy_testnet:
+    runs-on: ubuntu-latest
+    needs: check
+    steps:
+      - name: Foundry Deploy Action
+        uses: grossiwm/foundry-deploy-action@latest
+        with:
+          rpc-url: ${{ secrets.TESTNET_RPC_URL }}
+          private-key: ${{ secrets.PRIVATE_KEY }}
+          chain-id: ${{ secrets.TESTNET_CHAIN_ID }}
+          etherscan-api-key: ${{ secrets.ETHERSCAN_API_KEY }}
+          deploy-script: script/deploy.s.sol:CounterScript
+          project_dir: ./smartcontracts
