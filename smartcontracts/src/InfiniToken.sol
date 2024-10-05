@@ -9,10 +9,13 @@ contract InfiniToken is ERC20, Ownable {
     uint256 public claimAmount;
     uint256 public cooldownTime;
 
-    constructor(string memory _name, string memory _symbol, uint8 _decimals, uint256 _claimAmount, uint256 _cooldownTime)
-        ERC20(_name, _symbol, 0, _decimals)
-        Ownable()
-    {
+    constructor(
+        string memory _name,
+        string memory _symbol,
+        uint8 _decimals,
+        uint256 _claimAmount,
+        uint256 _cooldownTime
+    ) ERC20(_name, _symbol, 0, _decimals) Ownable() {
         claimAmount = _claimAmount;
         cooldownTime = _cooldownTime;
     }

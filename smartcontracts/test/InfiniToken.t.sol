@@ -85,17 +85,14 @@ contract InfiniTokenTest is BaseSetup {
     }
 
     function testShoulNotAllowNoOwnerChangeCooldownTime() public {
-        
         vm.expectRevert("Ownable: caller is not the owner");
         vm.prank(bob);
         infiniToken.changeCooldownTime(48 hours);
     }
 
     function testShoulNotAllowNoOwnerChangeClaimAmount() public {
-        
         vm.expectRevert("Ownable: caller is not the owner");
         vm.prank(bob);
         infiniToken.changeClaimAmount(500 * (10 ** INFINITOKEN_DECIMALS));
     }
-    
 }

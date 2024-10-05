@@ -10,7 +10,7 @@ contract InfiniTokenScript is Script {
     string SYMBOL = "INFTY";
     uint8 DECIMALS = 2;
     uint256 COOLDOWN_TIME = 24 hours;
-    uint256 CLAIM_AMOUNT = 100 * ( 10**DECIMALS );
+    uint256 CLAIM_AMOUNT = 100 * (10 ** DECIMALS);
 
     function setUp() public {}
 

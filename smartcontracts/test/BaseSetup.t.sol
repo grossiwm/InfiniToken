@@ -15,7 +15,7 @@ contract BaseSetup is Utils {
     string INFINITOKEN_NAME = "InfiniToken";
     string INFINITOKEN_SYMBOL = "IFT";
     uint8 INFINITOKEN_DECIMALS = 2;
-    uint256 INFINITOKEN_CLAIM_AMOUNT = 100*( 10**INFINITOKEN_DECIMALS );
+    uint256 INFINITOKEN_CLAIM_AMOUNT = 100 * (10 ** INFINITOKEN_DECIMALS);
     uint256 INFINITOKEN_COOLDOWN_TIME = 24 hours;
 
     Counter counter;
@@ -50,7 +50,13 @@ contract BaseSetup is Utils {
         vm.startPrank(creator);
         counter = new Counter();
         token = new ERC20Impl(ERC20_IMPL_NAME, ERC20_IMPL_SYMBOL, ERC20_IMPL_INITIAL_SUPPLY);
-        infiniToken = new InfiniToken(INFINITOKEN_NAME, INFINITOKEN_SYMBOL, INFINITOKEN_DECIMALS, INFINITOKEN_CLAIM_AMOUNT, INFINITOKEN_COOLDOWN_TIME);
+        infiniToken = new InfiniToken(
+            INFINITOKEN_NAME,
+            INFINITOKEN_SYMBOL,
+            INFINITOKEN_DECIMALS,
+            INFINITOKEN_CLAIM_AMOUNT,
+            INFINITOKEN_COOLDOWN_TIME
+        );
         vm.stopPrank();
 
         vm.warp(1438269988);
