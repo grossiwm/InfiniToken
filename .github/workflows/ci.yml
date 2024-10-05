@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - infinity-token
   workflow_dispatch:
 
 env:
