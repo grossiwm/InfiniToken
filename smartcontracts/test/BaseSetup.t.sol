@@ -7,10 +7,16 @@ import {InfiniToken} from "../src/InfiniToken.sol";
 import {Utils} from "./Utils.t.sol";
 
 contract BaseSetup is Utils {
-    string DEFAULT_NAME = "Awesome Name";
-    string DEFAULT_SYMBOL = "AWME";
-    uint8 DEFAULT_DECIMALS = 18;
-    uint256 DEFAULT_INITIAL_SUPPLY = 1000000;
+    string ERC20_IMPL_NAME = "Awesome Name";
+    string ERC20_IMPL_SYMBOL = "AWME";
+    uint8 ERC20_IMPL_DECIMALS = 18;
+    uint256 ERC20_IMPL_INITIAL_SUPPLY = 1000000;
+
+    string INFINITOKEN_NAME = "InfiniToken";
+    string INFINITOKEN_SYMBOL = "IFT";
+    uint8 INFINITOKEN_DECIMALS = 2;
+    uint256 INFINITOKEN_CLAIM_AMOUNT = 100*( 10**INFINITOKEN_DECIMALS );
+    uint256 INFINITOKEN_COOLDOWN_TIME = 24 hours;
 
     Counter counter;
     ERC20Impl token;
@@ -43,8 +49,8 @@ contract BaseSetup is Utils {
 
         vm.startPrank(creator);
         counter = new Counter();
-        token = new ERC20Impl(DEFAULT_NAME, DEFAULT_SYMBOL, DEFAULT_INITIAL_SUPPLY);
-        infiniToken = new InfiniToken("InfiniToken", "IFT", 2);
+        token = new ERC20Impl(ERC20_IMPL_NAME, ERC20_IMPL_SYMBOL, ERC20_IMPL_INITIAL_SUPPLY);
+        infiniToken = new InfiniToken(INFINITOKEN_NAME, INFINITOKEN_SYMBOL, INFINITOKEN_DECIMALS, INFINITOKEN_CLAIM_AMOUNT, INFINITOKEN_COOLDOWN_TIME);
         vm.stopPrank();
 
         vm.warp(1438269988);

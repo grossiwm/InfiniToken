@@ -8,15 +8,15 @@ import "forge-std/console.sol";
 
 contract ERC20ImplTest is BaseSetup {
     function testName() public {
-        assertEq(DEFAULT_NAME, token.name());
+        assertEq(ERC20_IMPL_NAME, token.name());
     }
 
     function testSymbol() public {
-        assertEq(DEFAULT_SYMBOL, token.symbol());
+        assertEq(ERC20_IMPL_SYMBOL, token.symbol());
     }
 
     function testTotalSupply() public {
-        assertEq(DEFAULT_INITIAL_SUPPLY * (10 ** uint256(token.decimals())), token.totalSupply());
+        assertEq(ERC20_IMPL_INITIAL_SUPPLY * (10 ** uint256(token.decimals())), token.totalSupply());
     }
 
     function testBalanceOf() public {
@@ -27,8 +27,8 @@ contract ERC20ImplTest is BaseSetup {
         uint256 currentCreatorBalance = token.balanceOf(creator);
         vm.prank(creator);
         token.transfer(alice, 100);
-        assertEq(token.balanceOf(alice), 100);
-        assertEq(token.balanceOf(creator), currentCreatorBalance - 100);
+        assertEq(100, token.balanceOf(alice));
+        assertEq(currentCreatorBalance - 100, token.balanceOf(creator));
     }
 
     function testTransferInsufficientBalance() public {
