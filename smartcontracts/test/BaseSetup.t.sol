@@ -2,16 +2,25 @@
 pragma solidity ^0.8.18;
 
 import {Counter} from "../src/Counter.sol";
-import {ERC20Impl} from "../src/ERC20Impl.sol";
+import {BasicERC20} from "../src/BasicERC20.sol";
+import {InfiniToken} from "../src/InfiniToken.sol";
 import {Utils} from "./Utils.t.sol";
 
 contract BaseSetup is Utils {
-    string DEFAULT_NAME = "Awesome Name";
-    string DEFAULT_SYMBOL = "AWME";
-    uint256 DEFAULT_INITIAL_SUPPLY = 1000000;
+    string BASIC_ERC20_NAME = "Awesome Name";
+    string BASIC_ERC20_SYMBOL = "AWME";
+    uint8 BASIC_ERC20_DECIMALS = 18;
+    uint256 BASIC_ERC20_INITIAL_SUPPLY = 1000000;
+
+    string INFINITOKEN_NAME = "InfiniToken";
+    string INFINITOKEN_SYMBOL = "IFT";
+    uint8 INFINITOKEN_DECIMALS = 2;
+    uint256 INFINITOKEN_CLAIM_AMOUNT = 100 * (10 ** INFINITOKEN_DECIMALS);
+    uint256 INFINITOKEN_COOLDOWN_TIME = 24 hours;
 
     Counter counter;
-    ERC20Impl token;
+    BasicERC20 basicERC20;
+    InfiniToken infiniToken;
 
     address[] _users;
     address creator;
@@ -40,8 +49,17 @@ contract BaseSetup is Utils {
 
         vm.startPrank(creator);
         counter = new Counter();
-        token = new ERC20Impl(DEFAULT_NAME, DEFAULT_SYMBOL, DEFAULT_INITIAL_SUPPLY);
+        basicERC20 = new BasicERC20(BASIC_ERC20_NAME, BASIC_ERC20_SYMBOL, BASIC_ERC20_INITIAL_SUPPLY);
+        infiniToken = new InfiniToken(
+            INFINITOKEN_NAME,
+            INFINITOKEN_SYMBOL,
+            INFINITOKEN_DECIMALS,
+            INFINITOKEN_CLAIM_AMOUNT,
+            INFINITOKEN_COOLDOWN_TIME
+        );
         vm.stopPrank();
+
+        vm.warp(1438269988);
     }
 
     function test_basesetup_just_for_pass_in_converage() public {}
